@@ -3,5 +3,9 @@
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>components/SidePanel.qml</file>
+        <file>components/SmallMenuBar.qml</file>
+        <file>components/SmallMenuItem.qml</file>
+        <file>components/SmallMenuSeparator.qml</file>
+        <file>components/SmallMenu.qml</file>
     </qresource>
 </RCC>

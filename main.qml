@@ -22,29 +22,28 @@ ApplicationWindow {
         property alias leftPanelWidth: leftPanel.width
     }
 
-    menuBar: MenuBar {
+    menuBar: SmallMenuBar {
         id: mainMenu
-        scale: 1
-        topPadding: scale * -20
-        height: scale*40
-        Menu {
+        SmallMenu {
+            scale: 0.2
             title: qsTr("&File")
-            Action { text: qsTr("&New...")  }
-            Action { text: qsTr("&Open...") }
-            Action { text: qsTr("&Save") }
-            Action { text: qsTr("Save &As...") }
+            SmallMenuItem { text: qsTr("&New..."); onTriggered: console.log("New")  }
+            SmallMenuItem { text: qsTr("&Open...") }
+            SmallMenuItem { text: qsTr("&Save") }
+            SmallMenuItem { text: qsTr("Save &As...") }
             MenuSeparator { }
-            Action { text: qsTr("&Quit") }
+            SmallMenuItem { text: qsTr("&Quit") }
         }
-        Menu {
+        SmallMenu {
             title: qsTr("&Edit")
-            Action { text: qsTr("Cu&t") }
-            Action { text: qsTr("&Copy") }
-            Action { text: qsTr("&Paste") }
+            SmallMenuItem { text: qsTr("Cu&t") }
+            SmallMenuItem { text: qsTr("&Copy") }
+            SmallMenuItem { text: qsTr("&Paste") }
         }
-        Menu {
+        SmallMenu {
             title: qsTr("&Help")
-            Action { text: qsTr("&About") }
+            SmallMenuItem { text: qsTr("&About") }
+            SmallMenuItem { text: qsTr("&About") }
         }
 
     }
@@ -96,37 +95,29 @@ ApplicationWindow {
                     contextMenu.popup();
                     console.log(mouse.button);
                 }
-                Menu {
+                SmallMenu {
                     id: contextMenu
-
-                    MenuItem {
+                    SmallMenuItem {
+                        text: qsTr("&Copy")
+                        enabled: true
+                        onTriggered: console.log("Copy")
+                        //            enabled: textArea.selectedText
+                        //onTriggered: textArea.copy()
+                    }
+                    SmallMenuItem {
                         text: qsTr("Copy")
                         enabled: true
                         //            enabled: textArea.selectedText
                         //onTriggered: textArea.copy()
                     }
-                    MenuItem {
-                        text: qsTr("Cut")
-                        //            enabled: textArea.selectedText
-                        //            onTriggered: textArea.cut()
-                    }
-                    MenuItem {
-                        text: qsTr("Paste")
-                        //            enabled: textArea.canPaste
-                        //            onTriggered: textArea.paste()
-                    }
 
-                    MenuSeparator {}
+                    SmallMenuSeparator {}
 
-                    MenuItem {
+                    SmallMenuItem {
                         text: qsTr("Font...")
                         //            onTriggered: fontDialog.open()
                     }
 
-                    MenuItem {
-                        text: qsTr("Color...")
-                        //            onTriggered: colorDialog.open()
-                    }
                 }
 
             }
