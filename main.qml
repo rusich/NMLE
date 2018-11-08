@@ -24,14 +24,14 @@ ApplicationWindow {
 
     menuBar: SmallMenuBar {
         id: mainMenu
+        visible: true
         SmallMenu {
-            scale: 0.2
             title: qsTr("&File")
             SmallMenuItem { text: qsTr("&New..."); onTriggered: console.log("New")  }
-            SmallMenuItem { text: qsTr("&Open...") }
+            SmallMenuItem { text: qsTr("&Open...");  }
             SmallMenuItem { text: qsTr("&Save") }
             SmallMenuItem { text: qsTr("Save &As...") }
-            MenuSeparator { }
+            SmallMenuSeparator { }
             SmallMenuItem { text: qsTr("&Quit") }
         }
         SmallMenu {
@@ -70,7 +70,7 @@ ApplicationWindow {
                 implicitHeight: parent.height
                 height: tb.height
                 text: qsTr("⋮")
-                onClicked: mainMenu.popup()
+                onClicked: contextMenu.popup()
             }
         }
     }
