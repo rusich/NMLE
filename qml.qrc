@@ -7,5 +7,7 @@
         <file>components/SmallMenuItem.qml</file>
         <file>components/SmallMenuSeparator.qml</file>
         <file>components/SmallMenu.qml</file>
+        <file>components/BlocksLibrary.qml</file>
+        <file>images/qtlogo.png</file>
     </qresource>
 </RCC>

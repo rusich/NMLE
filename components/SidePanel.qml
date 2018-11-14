@@ -12,11 +12,10 @@ Item {
     Layout.fillHeight: true
     Layout.fillWidth:  false
     Layout.preferredWidth: width
-
     Rectangle {
         id: bg
-        color: "yellow"
         anchors.fill: parent
+        color: Material.background
     }
 
     Rectangle {
@@ -24,7 +23,8 @@ Item {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         width: 3
-        color: Qt.darker(parent.color)
+//        color: "#342424"
+        color: Qt.lighter(Material.primary)
         Component.onCompleted: {
             if(rightPanel)
                 anchors.left = bg.left

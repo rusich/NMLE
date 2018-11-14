@@ -82,12 +82,15 @@ ApplicationWindow {
 
         SidePanel {
             id: leftPanel
-        }
+            BlocksLibrary {
 
+            }
+
+        }
         Rectangle {
             Layout.fillHeight: true
             Layout.fillWidth:  true
-            color: "red"
+            color: Material.background
             MouseArea {
                 acceptedButtons: Qt.RightButton
                 anchors.fill: parent
@@ -95,39 +98,39 @@ ApplicationWindow {
                     contextMenu.popup();
                     console.log(mouse.button);
                 }
-                SmallMenu {
-                    id: contextMenu
-                    SmallMenuItem {
-                        text: qsTr("&Copy")
-                        enabled: true
-                        onTriggered: console.log("Copy")
-                        //            enabled: textArea.selectedText
-                        //onTriggered: textArea.copy()
-                    }
-                    SmallMenuItem {
-                        text: qsTr("Copy")
-                        enabled: true
-                        //            enabled: textArea.selectedText
-                        //onTriggered: textArea.copy()
-                    }
-
-                    SmallMenuSeparator {}
-
-                    SmallMenuItem {
-                        text: qsTr("Font...")
-                        //            onTriggered: fontDialog.open()
-                    }
-
-                }
-
             }
         }
-        SidePanel{
-            id: rightPanel
-            rightPanel: true
+        //        SidePanel{
+        //            id: rightPanel
+        //            rightPanel: true
+        //        }
+
+    }
+    SmallMenu {
+        id: contextMenu
+        SmallMenuItem {
+            text: qsTr("&Copy")
+            enabled: true
+            onTriggered: console.log("Copy")
+            //            enabled: textArea.selectedText
+            //onTriggered: textArea.copy()
+        }
+        SmallMenuItem {
+            text: qsTr("Copy")
+            enabled: true
+            //            enabled: textArea.selectedText
+            //onTriggered: textArea.copy()
+        }
+
+        SmallMenuSeparator {}
+
+        SmallMenuItem {
+            text: qsTr("Font...")
+            //            onTriggered: fontDialog.open()
         }
 
     }
+
 
 
     footer: TabBar {

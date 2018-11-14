@@ -7,4 +7,5 @@ MenuBar {
     topPadding: -10
     height: 27
     leftPadding: -width/4.67 // Подстройка найдена методом перебораа)
+    implicitWidth: width
 }
