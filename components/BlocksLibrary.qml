@@ -56,11 +56,11 @@ Rectangle {
         anchors.top: searchBox.bottom
         ListModel {
             id: blocksModel
-            ListElement { name: "One"; image: "qrc:/images/qtlogo.png" }
-            ListElement { name: "Two"; image: "qrc:/images/qtlogo.png" }
-            ListElement { name: "Three"; image: "qrc:/images/qtlogo.png" }
-            ListElement { name: "Four"; image: "qrc:/images/qtlogo.png" }
-            ListElement { name: "Five"; image: "qrc:/images/qtlogo.png" }
+            ListElement { name: "One"; blockImage: "qrc:/images/qtlogo.png" }
+            ListElement { name: "Two"; blockImage: "qrc:/images/qtlogo.png" }
+            ListElement { name: "Three"; blockImage: "qrc:/images/qtlogo.png" }
+            ListElement { name: "Four"; blockImage: "qrc:/images/qtlogo.png" }
+            ListElement { name: "Five"; blockImage: "qrc:/images/qtlogo.png" }
         }
 
         Component {
@@ -70,18 +70,30 @@ Rectangle {
                 Column {
                     Image {
                         id: img;
-                        source: image; //model
+                        source: blockImage; //model
                         anchors.horizontalCenter: parent.horizontalCenter
-                        states: State {
-                            when: dndArea.drag.active
-                            ParentChange { target: img; parent: parent}
-                            AnchorChanges { target: img; anchors.verticalCenter: undefined; anchors.horizontalCenter: undefined }
-                        }
 
                         MouseArea {
                             id: dndArea
                             anchors.fill: parent
-                            drag.target: img
+                            acceptedButtons: Qt.LeftButton
+                            property var dragIndicator
+                            onPressed: {
+                                console.log(index);
+                                dragIndicator = Qt.createQmlObject('import QtQuick 2.0; Image {}',
+                                                                   mainWindow);
+                                var p = img.mapToItem(mainWindow.contentItem, 0, 65);
+                                console.log(mouse.x, mouse.y, p.x, p.y)
+                                dragIndicator.source = img.source;
+                                dragIndicator.x = p.x;
+                                dragIndicator.y = p.y;
+                                dragIndicator.opacity = 0.7;
+
+                            }
+
+                            drag.target: dragIndicator
+                            drag.minimumY: mainMenu.implicitHeight+menuBar.implicitHeight
+                            onReleased: dragIndicator.destroy()
                         }
                     }
                     Text { text: name; color: "white"; anchors.horizontalCenter: parent.horizontalCenter }
