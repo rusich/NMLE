@@ -5,6 +5,8 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls.Material 2.0
 import Qt.labs.settings 1.0
 import "./components"
+import QuickQanava 2.0 as Qan
+import "qrc:/QuickQanava" as Qan
 
 ApplicationWindow {
     id: mainWindow
@@ -86,32 +88,73 @@ ApplicationWindow {
 
             }
 
+ListView {
+                    id: selectionListView
+                    x: 0
+                    y: 600
+                    width: 200
+                    height: 200
+                    clip: true
+
+                    model: graphView.selectedNodes      // <---------
+                    spacing: 4; focus: true; flickableDirection : Flickable.VerticalFlick
+                    highlightFollowsCurrentItem: false
+                    highlight: Rectangle {
+                        x: 0; y: ( selectionListView.currentItem !== null ? selectionListView.currentItem.y : 0 );
+                        width: selectionListView.width; height: selectionListView.currentItem.height
+                        color: "lightsteelblue"; opacity: 0.7; radius: 5
+                    }
+                    delegate: Item {
+                        id: selectedNodeDelegate
+                        width: ListView.view.width; height: 30;
+                        Text { text: "Label: " + itemData.label }       // <----- itemData is a Qan.Node, node
+                                                                        // label could be accessed directly
+                        MouseArea {
+                            anchors.fill: selectedNodeDelegate
+                            onClicked: { selectedNodeDelegate.ListView.view.currentIndex = index }
+                        }
+                    }
+                }
+
         }
         Rectangle {
             Layout.fillHeight: true
             Layout.fillWidth:  true
-            color: Material.background
-            MouseArea {
-                acceptedButtons: Qt.RightButton
-                anchors.fill: parent
-                onPressed: {
-                    contextMenu.popup();
-                    console.log(mouse.button);
-                }
-            }
-        }
-        //        SidePanel{
-        //            id: rightPanel
-        //            rightPanel: true
-        //        }
+            clip: true
 
+            Qan.GraphView {
+                id: graphView
+                anchors.fill: parent
+
+                navigable   : true
+                graph: Qan.Graph {
+                    id: graph
+                    Component.onCompleted: {    // Qan.Graph.Component.onCompleted()
+                        var n3 = graph.insertNode();
+                        n3.label = "N3"; n3.item.x = 500; n3.item.y = 100;
+                        //                        var n3p1 = graph.insertInPort(n3, Qan.NodeItem.Left);
+
+                        //                        n3p1.label = "IN #1";
+
+                        //                        var n3p1 = graph.insertInPort(n3, Qan.NodeItem.Top);
+                        //                        n3p1.label = "OUT #1";
+                        //                        var n3p2 = graph.insertInPort(n3, Qan.NodeItem.Bottom);
+                        //                        n3p2.label = "OUT #2";
+
+                        //                        var e = graph.insertEdge(n2, n3);
+                        //                        graph.bindEdgeDestination(e, n2p3);  // Bind our edge source to node N2 port P3 (OUT #1)
+                        //                        graph.bindEdgeDestination(e, n3p1);  // Bind our edge destination to node N3 port P1 (IN #1)
+                    }
+                } // Qan.Graph: topology
+            } // Qan.GraphView
+        }
     }
     SmallMenu {
         id: contextMenu
         SmallMenuItem {
             text: qsTr("&Copy")
             enabled: true
-            onTriggered: console.log("Copy")
+            onTriggered:  graph.insertNode()
             //            enabled: textArea.selectedText
             //onTriggered: textArea.copy()
         }
