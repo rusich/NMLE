@@ -9,5 +9,6 @@
         <file>components/SmallMenu.qml</file>
         <file>components/BlocksLibrary.qml</file>
         <file>images/qtlogo.png</file>
+        <file>themetest.qml</file>
     </qresource>
 </RCC>

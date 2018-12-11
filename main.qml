@@ -14,6 +14,7 @@ ApplicationWindow {
     width: 1100
     height: 700
     title: qsTr("Hello World")
+    Material.theme: Material.Dark
 
     Settings {
         category: "MainWindow"
@@ -88,33 +89,33 @@ ApplicationWindow {
 
             }
 
-ListView {
-                    id: selectionListView
-                    x: 0
-                    y: 600
-                    width: 200
-                    height: 200
-                    clip: true
+            ListView {
+                id: selectionListView
+                x: 0
+                y: 600
+                width: 200
+                height: 200
+                clip: true
 
-                    model: graphView.selectedNodes      // <---------
-                    spacing: 4; focus: true; flickableDirection : Flickable.VerticalFlick
-                    highlightFollowsCurrentItem: false
-                    highlight: Rectangle {
-                        x: 0; y: ( selectionListView.currentItem !== null ? selectionListView.currentItem.y : 0 );
-                        width: selectionListView.width; height: selectionListView.currentItem.height
-                        color: "lightsteelblue"; opacity: 0.7; radius: 5
-                    }
-                    delegate: Item {
-                        id: selectedNodeDelegate
-                        width: ListView.view.width; height: 30;
-                        Text { text: "Label: " + itemData.label }       // <----- itemData is a Qan.Node, node
-                                                                        // label could be accessed directly
-                        MouseArea {
-                            anchors.fill: selectedNodeDelegate
-                            onClicked: { selectedNodeDelegate.ListView.view.currentIndex = index }
-                        }
+                model: graphView.selectedNodes      // <---------
+                spacing: 4; focus: true; flickableDirection : Flickable.VerticalFlick
+                highlightFollowsCurrentItem: false
+                highlight: Rectangle {
+                    x: 0; y: ( selectionListView.currentItem !== null ? selectionListView.currentItem.y : 0 );
+                    width: selectionListView.width; height: selectionListView.currentItem.height
+                    color: "lightsteelblue"; opacity: 0.7; radius: 5
+                }
+                delegate: Item {
+                    id: selectedNodeDelegate
+                    width: ListView.view.width; height: 30;
+                    Text { text: "Label: " + itemData.label }       // <----- itemData is a Qan.Node, node
+                    // label could be accessed directly
+                    MouseArea {
+                        anchors.fill: selectedNodeDelegate
+                        onClicked: { selectedNodeDelegate.ListView.view.currentIndex = index }
                     }
                 }
+            }
 
         }
         Rectangle {
@@ -125,10 +126,12 @@ ListView {
             Qan.GraphView {
                 id: graphView
                 anchors.fill: parent
-
-                navigable   : true
+                resizeHandlerColor: Material.accent
+                gridThickColor: Material.theme === Material.Dark ? "#4e4e4e" : "#c1c1c1"
+//                navigable   : true
                 graph: Qan.Graph {
                     id: graph
+                    Material.theme: Material.Dark
                     Component.onCompleted: {    // Qan.Graph.Component.onCompleted()
                         var n3 = graph.insertNode();
                         n3.label = "N3"; n3.item.x = 500; n3.item.y = 100;
