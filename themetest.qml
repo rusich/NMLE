@@ -27,6 +27,13 @@ ApplicationWindow {
                 var n3 = graph.insertNode();
                 n3.label = "N3"; n3.item.x = 500; n3.item.y = 100;
             }
+            DropArea {
+                anchors.fill: parent
+                onDropped: {
+                    console.log("dropped");
+                }
+            }
+
             // ...
         } // Qan.Graph
         // ...

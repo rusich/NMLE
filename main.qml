@@ -11,10 +11,10 @@ import "qrc:/QuickQanava" as Qan
 ApplicationWindow {
     id: mainWindow
     visible: true
-    width: 1100
-    height: 700
+    //    width: 1100
+    //    height: 700
     title: qsTr("Hello World")
-    Material.theme: Material.Dark
+    Material.theme: Material.Light
 
     Settings {
         category: "MainWindow"
@@ -97,7 +97,7 @@ ApplicationWindow {
                 height: 200
                 clip: true
 
-                model: graphView.selectedNodes      // <---------
+                //model: graphView.selectedNodes      // <---------
                 spacing: 4; focus: true; flickableDirection : Flickable.VerticalFlick
                 highlightFollowsCurrentItem: false
                 highlight: Rectangle {
@@ -124,29 +124,41 @@ ApplicationWindow {
             clip: true
 
             Qan.GraphView {
+                DropArea {
+                    anchors.fill: parent
+                    onDropped: {
+                        console.log(drag.x);
+                       var tempNode = graph.insertNode();
+                       tempNode.label = drag.keys;
+                       tempNode.item.x = drag.x;
+                       tempNode.item.y = drag.y;
+                    }
+                }
+
+
                 id: graphView
                 anchors.fill: parent
                 resizeHandlerColor: Material.accent
                 gridThickColor: Material.theme === Material.Dark ? "#4e4e4e" : "#c1c1c1"
-//                navigable   : true
+                //                navigable   : true
                 graph: Qan.Graph {
                     id: graph
                     Material.theme: Material.Dark
                     Component.onCompleted: {    // Qan.Graph.Component.onCompleted()
                         var n3 = graph.insertNode();
                         n3.label = "N3"; n3.item.x = 500; n3.item.y = 100;
-                        //                        var n3p1 = graph.insertInPort(n3, Qan.NodeItem.Left);
+                        var n3p1 = graph.insertInPort(n3, Qan.NodeItem.Left);
 
-                        //                        n3p1.label = "IN #1";
+                        n3p1.label = "IN #1";
 
-                        //                        var n3p1 = graph.insertInPort(n3, Qan.NodeItem.Top);
-                        //                        n3p1.label = "OUT #1";
-                        //                        var n3p2 = graph.insertInPort(n3, Qan.NodeItem.Bottom);
-                        //                        n3p2.label = "OUT #2";
+                        //                                                var n3p1 = graph.insertInPort(n3, Qan.NodeItem.Top);
+                        n3p1.label = "OUT #1";
+                        var n3p2 = graph.insertInPort(n3, Qan.NodeItem.Bottom);
+                        n3p2.label = "OUT #2";
 
-                        //                        var e = graph.insertEdge(n2, n3);
-                        //                        graph.bindEdgeDestination(e, n2p3);  // Bind our edge source to node N2 port P3 (OUT #1)
-                        //                        graph.bindEdgeDestination(e, n3p1);  // Bind our edge destination to node N3 port P1 (IN #1)
+                        var e = graph.insertEdge(n2, n3);
+                        graph.bindEdgeDestination(e, n2p3);  // Bind our edge source to node N2 port P3 (OUT #1)
+                        graph.bindEdgeDestination(e, n3p1);  // Bind our edge destination to node N3 port P1 (IN #1)
                     }
                 } // Qan.Graph: topology
             } // Qan.GraphView

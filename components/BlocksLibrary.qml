@@ -81,19 +81,27 @@ Rectangle {
                             onPressed: {
                                 console.log(index);
                                 dragIndicator = Qt.createQmlObject('import QtQuick 2.0; Image {}',
-                                                                   mainWindow);
+                                                   mainWindow);
                                 var p = img.mapToItem(mainWindow.contentItem, 0, 65);
-                                console.log(mouse.x, mouse.y, p.x, p.y)
+                                console.log(mouse.x, mouse.y, p.x, p.y);
                                 dragIndicator.source = img.source;
                                 dragIndicator.x = p.x;
                                 dragIndicator.y = p.y;
                                 dragIndicator.opacity = 0.7;
+                                dragIndicator.Drag.active = true;
 
                             }
 
                             drag.target: dragIndicator
                             drag.minimumY: mainMenu.implicitHeight+menuBar.implicitHeight
-                            onReleased: dragIndicator.destroy()
+                            drag.keys: name
+                            onReleased: {
+                                dragIndicator.destroy();
+                            }
+                            drag.onActiveChanged: {
+                                if (!dndArea.drag.active)
+                                    dragIndicator.Drag.drop();
+                            }
                         }
                     }
                     Text { text: name; color: "white"; anchors.horizontalCenter: parent.horizontalCenter }
