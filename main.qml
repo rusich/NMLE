@@ -124,41 +124,45 @@ ApplicationWindow {
             clip: true
 
             Qan.GraphView {
+                id: graphView
+                onClicked: console.log("click")
                 DropArea {
                     anchors.fill: parent
                     onDropped: {
-                        console.log(drag.x);
                        var tempNode = graph.insertNode();
-                       tempNode.label = drag.keys;
-                       tempNode.item.x = drag.x;
-                       tempNode.item.y = drag.y;
+                        tempNode.label = "sdfsdf";
+                        graph.insertPort(tempNode, Qan.NodeItem.Left, Qan.PortItem.Type.In, "sdsdf", "portid");
+                        var p = graph.insertPort(tempNode, Qan.NodeItem.Right, Qan.PortItem.Type.Out, "sdsdfOut");
+
+//                       var dropPoint = graph.mapToScene(graphView,drag.x,drag.y);
+//                        console.log(graphView.mapToItem(drag.x,drag.y).x);
+                       tempNode.item.x = dropPoint.x;
+                       tempNode.item.y = dropPoint.y;
                     }
                 }
 
 
-                id: graphView
                 anchors.fill: parent
                 resizeHandlerColor: Material.accent
                 gridThickColor: Material.theme === Material.Dark ? "#4e4e4e" : "#c1c1c1"
                 //                navigable   : true
                 graph: Qan.Graph {
                     id: graph
-                    Material.theme: Material.Dark
                     Component.onCompleted: {    // Qan.Graph.Component.onCompleted()
                         var n3 = graph.insertNode();
                         n3.label = "N3"; n3.item.x = 500; n3.item.y = 100;
-                        var n3p1 = graph.insertInPort(n3, Qan.NodeItem.Left);
+//                        var n3p1 = graph.insertInPort(n3, Qan.NodeItem.Left);
 
-                        n3p1.label = "IN #1";
+//                        n3p1.label = "IN #1";
 
                         //                                                var n3p1 = graph.insertInPort(n3, Qan.NodeItem.Top);
-                        n3p1.label = "OUT #1";
-                        var n3p2 = graph.insertInPort(n3, Qan.NodeItem.Bottom);
-                        n3p2.label = "OUT #2";
+//                        n3p1.label = "OUT #1";
+//                        var n3p2 = graph.insertInPort(n3, Qan.NodeItem.Bottom);
+//                        n3p2.label = "OUT #2";
 
-                        var e = graph.insertEdge(n2, n3);
-                        graph.bindEdgeDestination(e, n2p3);  // Bind our edge source to node N2 port P3 (OUT #1)
-                        graph.bindEdgeDestination(e, n3p1);  // Bind our edge destination to node N3 port P1 (IN #1)
+//                        var e = graph.insertEdge(n2, n3);
+//                        graph.bindEdgeDestination(e, n2p3);  // Bind our edge source to node N2 port P3 (OUT #1)
+//                        graph.bindEdgeDestination(e, n3p1);  // Bind our edge destination to node N3 port P1 (IN #1)
                     }
                 } // Qan.Graph: topology
             } // Qan.GraphView

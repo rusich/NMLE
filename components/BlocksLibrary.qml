@@ -79,11 +79,9 @@ Rectangle {
                             acceptedButtons: Qt.LeftButton
                             property var dragIndicator
                             onPressed: {
-                                console.log(index);
                                 dragIndicator = Qt.createQmlObject('import QtQuick 2.0; Image {}',
                                                    mainWindow);
                                 var p = img.mapToItem(mainWindow.contentItem, 0, 65);
-                                console.log(mouse.x, mouse.y, p.x, p.y);
                                 dragIndicator.source = img.source;
                                 dragIndicator.x = p.x;
                                 dragIndicator.y = p.y;
@@ -94,7 +92,6 @@ Rectangle {
 
                             drag.target: dragIndicator
                             drag.minimumY: mainMenu.implicitHeight+menuBar.implicitHeight
-                            drag.keys: name
                             onReleased: {
                                 dragIndicator.destroy();
                             }
